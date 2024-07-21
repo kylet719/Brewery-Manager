@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .removeField {
+        cursor: pointer;
+        margin-left: 5px;
+        font-weight: bold;
+    }
+
+    .removeField:hover {
+        color: red;
+    }
+
+    .searchField {
+        margin-bottom: 5px;
+    }
+
+    .checkbox-inline {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Database Application</title>
+</head>
+<body>
+<!-- ===================================================================================== -->
+<!-- Display the current status of the database connection.
+     !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+     -->
+<h1 id = "BreweryName">Database Connection Status:
+    <!-- An in-line placeholder to display connection status. -->
+</h1>
+<h2 id= "zipCodeHeading">Zip Code</h2>
+
+<a href="/customers.html">VIP Customers</a>
+<hr><br> <!-- ========================================================================= -->
+
+<h2>Beer</h2>
+<h3>Search</h3>
+
+<form id="beerSearch">
+    <div id="searchFields">
+        <div class="searchField">
+            <select name="SearchType">
+                <option value="Beer">Beer</option>
+                <option value="ABV">ABV</option>
+                <option value="Vessel">Vessel</option>
+                <option value="Volume">Volume</option>
+            </select>
+            <input type="text" name="SearchValue">
+            <label for="SearchLogic">Search Logic:</label>
+            <select id="SearchLogic" name="SearchLogic">
+                <option value="NONE">NONE</option>
+                <option value="OR">OR</option>
+                <option value="AND">AND</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div id="searchFieldMsg"></div>
+
+    <br>
+    <button type="button" onclick="addSearchField()">Add Search</button>
+    <br><br>
+
+    <div id="columnsChecklist">
+        <p class="checkbox-inline">Selected Columns:</p>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="beerNameCheckbox" name="columns" value="BEERNAME" checked> Beer Name
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="abvCheckbox" name="columns" value="ABV" checked> ABV
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="vesselCheckbox" name="columns" value="TYPE" checked> Vessel
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="volumeCheckbox" name="columns" value="VOLUME" checked> Volume
+        </label>
+    </div>
+    <div id="beerColumnMsg"></div>
+
+    <br>
+
+    <div style="display: flex; justify-content: flex-start; gap: 10px;">
+
+        <button type="submit">Search</button>
+        <button type="button" id="resetBeer" onclick="resetBeerTable()">Reset Search</button>
+    </div>
+
+    <br>
+
+</form>
+
+<button id="topBeers" onclick="fetchTopBeers()">Get top beers</button>
+<button id="topBeersClose" onclick="hideTopBeers()">Close top beers</button>
+<br><br>
+<div id="topBeersTableDiv" hidden>
+    <table id="topBeersTable" border="1">
+        <thead>
+        <tr>
+            <!--Table head, need to be adjusted accordingly to align with your own.-->
+            <th>Beer Name</th>
+            <th>Average rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <br><br>
+</div>
+
+<table id="beerTable" border="1">
+    <thead>
+    <tr>
+        <!--Table head, need to be adjusted accordingly to align with your own.-->
+        <th>Beer Name</th>
+        <th>Abv</th>
+        <th>Vessel</th>
+        <th>Volume</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<h2> Add Beer </h2>
+<form id="insertBeers">
+    Beer Name <input type="text" id="beerNameInput" placeholder="Enter Beer Name" required> <br><br>
+    Abv: <input type="number" id="abvInput" placeholder="Enter Abv" step="0.1" required> <br><br>
+    Vessel: <input type="text" id="vesselInput" placeholder="Enter Vessel" required> <br><br>
+    Volume: <input type="number" id="volumeInput" placeholder="Enter Volume" required> <br><br>
+
+    <button type="submit">Insert</button> <br>
+</form>
+<div id="insertBeerMsg"></div>
+
+
+
+<br><hr><br> <!-- ========================================================================= -->
+
+<!-- Show 'Demotable'.
+    Data will be fetched and inserted here dynamically using JavaScript. -->
+<h2>Employees</h2>
+<table id="demotable" border="1">
+    <thead>
+    <tr>
+        <!--Table head, need to be adjusted accordingly to align with your own.-->
+        <th>Brew Master ID</th>
+        <th>Name</th>
+        <th>Manages</th>
+        <th>Years of Experience</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<h2> Add Employees </h2>
+<form id="insertBrewMasterForm">
+    Master ID: <input type="number" id="brewMasterId" placeholder="Enter Master ID" required> <br><br>
+    Name: <input type="text" id="brewMasterName" placeholder="Enter Name" required> <br><br>
+    Manages: <select id="brewMasterBeer" required></select> <br><br>
+    Years of Experience: <input type="number" id="brewMasterExperience" placeholder="Enter Years of Experience" required> <br><br>
+    Specialty: <input type="text" id="brewMasterSpecialty" placeholder="Enter Specialty" required> <br><br>
+
+    <button type="submit">Insert</button> <br>
+</form>
+
+<div id="insertBrewMasterResult"></div>
+<br>
+
+<button id="abvQuery" onclick="fetchHighAbvBrewers()">Get High ABV Brewers</button>
+<button id="abvQueryClose" onclick="hideAbvQuery()">Close ABV Query</button>
+<br><br>
+<div id="abvTableAndWords" hidden>
+    <table id="abvTable" border="1">
+        <thead>
+        <tr>
+            <!--Table head, need to be adjusted accordingly to align with your own.-->
+            <th>Brew Master ID</th>
+            <th>Name</th>
+            <th>Average ABV</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="averageAbvValue"></div>
+</div>
+
+
+
+<br><hr><br> <!-- ========================================================================= -->
+
+
+<h2>Equipment</h2>
+<div style="display: flex; justify-content: flex-start; gap: 10px;">
+    <table id="brewKettleTable" border="1">
+        <thead>
+        <tr>
+            <th colspan="3">Brew Kettle</th>
+        </tr>
+        <tr>
+            <th>Serial ID</th>
+            <th>Manufacturer</th>
+            <th>Model</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <table id="fermenterTable" border="1">
+        <thead>
+        <tr>
+            <th colspan="3">Fermenters</th>
+        </tr>
+        <tr>
+            <th>Serial ID</th>
+            <th>Manufacturer</th>
+            <th>Model</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<br><hr><br> <!-- ========================================================================= -->
+
+<script src="scripts.js"></script>
+<script>
+    window.onload = function() {
+        DisplayBreweryName();
+        fetchTableData();
+        populateBeerDropdown();
+        populateBeerTable();
+        fetchBrewKettles();
+        fetchFermenters();
+
+        document.getElementById("insertBeers").addEventListener("submit", insertBeerTable);
+        document.getElementById("beerSearch").addEventListener("submit", getSearchFields);
+        document.getElementById("resetBeer").addEventListener("submit", resetBeerTable);
+
+        document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    };</script>
+<script></script>
+</body>
+</html>

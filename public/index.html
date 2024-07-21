@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Database Application</title>
+</head>
+<body>
+    <!-- ===================================================================================== -->
+    <!-- Display the current status of the database connection. 
+         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+         -->
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br> <!-- ========================================================================= -->
+    <div id="signup" hidden>
+        <h2> Enter new brewery details </h2>
+        <form id="signupForm">
+            Name: <input type="text" id="newBrewName" placeholder="Enter brewery name" required> <br><br>
+            Postal Code: <input type="text" id="newPc" placeholder="Enter postal code" maxlength="20"> <br><br>
+            Street Address: <input type="text" id="newAddress" placeholder="Enter address"> <br><br>
+            Province: <input type="text" id="newProvince" placeholder="Enter province"> <br><br>
+            <button type="submit"> New brewery </button>
+            <button type="button" id="toggleLogin" onclick="toggleForm()"> Log in </button>
+        </form>
+    </div>
+    <div id="login">
+        <h2> Enter in your brewery </h2>
+        <form id="loginForm">
+            Name: <input type="text" id="brewName" placeholder="Enter brewery name" required> <br><br>
+            Postal Code: <input type="text" id="pc" placeholder="Enter postal code" maxlength="20"> <br><br>
+            <button type="submit"> Log in </button>
+            <button type="button" id="toggleSignup" onclick="toggleForm()"> New brewery </button>
+        </form>
+    </div>
+    <div id="placeholder3"></div>
+
+    <br><br> <!-- ========================================================================= -->
+
+    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+    <script src="scripts.js"></script>
+    <script>
+        window.onload = function() {
+        checkDbConnection();
+        fetchTableData();
+        document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+        document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+        document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+        document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    };</script>
+</body>
+</html>

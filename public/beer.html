@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .removeField {
+        cursor: pointer;
+        margin-left: 5px;
+        font-weight: bold;
+    }
+
+    .removeField:hover {
+        color: red;
+    }
+
+    .searchField {
+        margin-bottom: 5px;
+    }
+
+    .checkbox-inline {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Beer Summary Page</title>
+</head>
+<body>
+<!-- ===================================================================================== -->
+<!-- Display the current status of the database connection.
+     !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+     -->
+<h1 id = "BeerNameTitle">No Beer Selected
+    <!-- An in-line placeholder to display connection status. -->
+</h1>
+
+<br><hr><br> <!-- ========================================================================= -->
+
+<h2>Reviews</h2>
+<h3 id ="averageRating">Average Rating:</h3>
+
+
+
+
+
+<table id="reviewTable" border="1">
+    <thead>
+    <tr>
+        <!--Table head, need to be adjusted accordingly to align with your own.-->
+        <th>Customer ID</th>
+        <th>Beer Name</th>
+        <th>Review Date</th>
+        <th>Rating</th>
+        <th>Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+<br><hr><br> <!-- ========================================================================= -->
+
+
+
+
+<br><br> <!-- ========================================================================= -->
+
+<script src="scripts.js"></script>
+<script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const beerName = urlParams.get('Beer');
+        const decodedBeerName = beerName ? decodeURIComponent(beerName) : "";
+        fetchBeerReviews(decodedBeerName);
+        fetchBeerAverageScore(decodedBeerName)
+        displayBeerReviewPage(decodedBeerName);
+
+    };</script>
+<script></script>
+</body>
+</html>
